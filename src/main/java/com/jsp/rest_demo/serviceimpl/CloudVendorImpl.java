@@ -1,10 +1,11 @@
-package com.jsp.rest_demo.impl;
+package com.jsp.rest_demo.serviceimpl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.jsp.rest_demo.entity.CloudVendor;
+import com.jsp.rest_demo.exception.CloudVendorNotFoundException;
 import com.jsp.rest_demo.repository.CloudVendorRepository;
 import com.jsp.rest_demo.service.CloudVendorService;
 
@@ -24,6 +25,8 @@ public class CloudVendorImpl implements CloudVendorService{
 	@Override
 	public CloudVendor getCloudVendorDetails(String vendorId) {
 		//More Business Logic
+		
+		if(repository.findById(vendorId).isEmpty()) throw new CloudVendorNotFoundException("No cloud vendor exist by this cloudVendorId");
 	
 		//since it return optional so, i will call one more method so that i will give me the required object
 		return repository.findById(vendorId).get();
