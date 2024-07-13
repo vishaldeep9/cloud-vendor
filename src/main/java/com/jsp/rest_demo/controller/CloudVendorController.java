@@ -2,6 +2,8 @@ package com.jsp.rest_demo.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jsp.rest_demo.entity.CloudVendor;
+import com.jsp.rest_demo.response.ResponseHandler;
 import com.jsp.rest_demo.service.CloudVendorService;
 
 @RestController
@@ -26,8 +29,11 @@ public class CloudVendorController  {
 	}
 
 	@GetMapping("{vendorId}")
-	public CloudVendor getCloudVendorDetails(@PathVariable String vendorId) {	
-		return service.getCloudVendorDetails(vendorId);	
+	public ResponseEntity<Object>  getCloudVendorDetails(@PathVariable String vendorId) {	
+		
+		//since we are handling positive scenario thati's why status code is OK
+	return	ResponseHandler.responseBuilder("Requested vendor details are given here ", HttpStatus.OK, service.getCloudVendorDetails(vendorId));
+		
 	}
 	
 	@GetMapping
